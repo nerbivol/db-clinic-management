@@ -1,7 +1,7 @@
 package edu.kpi.iasa.clinic.configuration.security;
 
-import edu.kpi.iasa.clinic.model.Account;
-import edu.kpi.iasa.clinic.model.Role;
+import edu.kpi.iasa.clinic.repository.model.Account;
+import edu.kpi.iasa.clinic.repository.model.Role;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -42,7 +42,7 @@ public class UserPrincipal implements UserDetails {
 
     @Override
     public String getUsername() {
-        return account.getUsername();
+        return account.getEmail();
     }
 
     @Override

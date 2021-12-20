@@ -1,10 +1,11 @@
-package edu.kpi.iasa.clinic.model;
+package edu.kpi.iasa.clinic.repository.model;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import org.springframework.security.core.GrantedAuthority;
 
 import javax.persistence.*;
+import javax.validation.constraints.Email;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
@@ -21,11 +22,10 @@ public class Account {
     public static final Account ACCOUNT = new Account("anonymous");
 
     private Long id;
-    private String username;
+    private String email;
     private String password;
     private String firstName;
     private String lastName;
-    private String email;
     private String phone;
     private boolean enabled = true;
     private LocalDate dateCreated;
@@ -34,8 +34,8 @@ public class Account {
     public Account() {
     }
 
-    public Account(String username) {
-        this.username = username;
+    public Account(String email) {
+        this.email = email;
     }
 
     @Id
@@ -50,17 +50,14 @@ public class Account {
     }
 
     @NotNull(message = "validation.text.error.required.field")
-    @Size(
-            min = 6,
-            max = 50,
-            message = "validation.text.error.from.six.to.fifty")
-    @Column(name = "login")
-    public String getUsername() {
-        return username;
+    @Email(message = "validation.text.email.error.field")
+    @Column(name = "email")
+    public String getEmail() {
+        return email;
     }
 
-    public void setUsername(String username) {
-        this.username = username;
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     @NotNull(message = "validation.text.error.required.field")
@@ -107,20 +104,6 @@ public class Account {
     }
 
     @NotNull(message = "validation.text.error.required.field")
-    @Size(
-            min = 6,
-            max = 50,
-            message = "validation.text.error.from.six.to.fifty")
-    @Column(name = "email")
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    @NotNull(message = "validation.text.error.required.field")
     @Pattern(regexp = "\\+\\d{12}", message = "validation.text.phone.error.sample")
     @Column(name = "phone")
     public String getPhone() {
@@ -131,7 +114,7 @@ public class Account {
         this.phone = phone;
     }
 
-    @Column(name = "enabled")
+    @Column(name = "benabled")
     public boolean isEnabled() {
         return enabled;
     }
@@ -145,11 +128,11 @@ public class Account {
             name = "user_role",
             joinColumns = {
                     @JoinColumn(
-                            name = "user",
+                            name = "nuser",
                             referencedColumnName = "id")},
             inverseJoinColumns = {
                     @JoinColumn(
-                            name = "role",
+                            name = "nrole",
                             referencedColumnName = "id")})
     public Collection<Role> getRoles() {
         return roles;
@@ -183,7 +166,7 @@ public class Account {
     }
 
     public String toString() {
-        return username;
+        return email;
     }
 
 }

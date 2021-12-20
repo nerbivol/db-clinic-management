@@ -1,7 +1,8 @@
-package edu.kpi.iasa.clinic.controller;
+package edu.kpi.iasa.clinic.api;
 
-import edu.kpi.iasa.clinic.model.Status;
+import edu.kpi.iasa.clinic.repository.model.Status;
 import edu.kpi.iasa.clinic.service.StatusService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -14,12 +15,13 @@ public class StatusController {
 
     private final StatusService statusService;
 
+    @Autowired
     public StatusController(StatusService statusService) {
         this.statusService = statusService;
     }
 
     @GetMapping(value = "/status")
-    public ResponseEntity<List<Status>> getStatuses(){
+    public ResponseEntity<List<Status>> getStatuses() {
         return ResponseEntity.ok(statusService.getStatuses());
     }
 

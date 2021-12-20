@@ -1,4 +1,4 @@
-package edu.kpi.iasa.clinic.model;
+package edu.kpi.iasa.clinic.repository.model;
 
 import org.springframework.security.core.GrantedAuthority;
 
@@ -30,7 +30,6 @@ public class Role implements GrantedAuthority {
     }
 
     @NotNull(message = "validation.text.error.required.field")
-    @Column(name = "code")
     public String getCode() {
         return code;
     }
@@ -40,7 +39,6 @@ public class Role implements GrantedAuthority {
     }
 
     @NotNull(message = "validation.text.error.required.field")
-    @Column(name = "name")
     public String getName() {
         return name;
     }

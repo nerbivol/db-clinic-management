@@ -1,8 +1,8 @@
-package edu.kpi.iasa.clinic.controller;
+package edu.kpi.iasa.clinic.api;
 
 import edu.kpi.iasa.clinic.exception.StatusNotFoundException;
 import edu.kpi.iasa.clinic.exception.UserNotFoundException;
-import edu.kpi.iasa.clinic.model.Error;
+import edu.kpi.iasa.clinic.repository.model.Error;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;

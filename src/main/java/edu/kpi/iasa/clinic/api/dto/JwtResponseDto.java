@@ -1,4 +1,4 @@
-package edu.kpi.iasa.clinic.dto;
+package edu.kpi.iasa.clinic.api.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -7,7 +7,6 @@ import lombok.NoArgsConstructor;
 
 @Data
 @Builder
-@NoArgsConstructor
 @AllArgsConstructor
 public class JwtResponseDto {
     String token;

@@ -1,7 +1,7 @@
 package edu.kpi.iasa.clinic.service;
 
 import edu.kpi.iasa.clinic.exception.StatusNotFoundException;
-import edu.kpi.iasa.clinic.model.Status;
+import edu.kpi.iasa.clinic.repository.model.Status;
 import edu.kpi.iasa.clinic.repository.StatusRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;

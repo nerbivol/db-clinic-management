@@ -1,7 +1,7 @@
 package edu.kpi.iasa.clinic.configuration.security.jwt;
 
 import edu.kpi.iasa.clinic.configuration.security.UserPrincipal;
-import edu.kpi.iasa.clinic.model.Account;
+import edu.kpi.iasa.clinic.repository.model.Account;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jws;
 import io.jsonwebtoken.Jwts;
@@ -85,11 +85,11 @@ public class JwtProcessor {
     }
 
     Authentication getAuthentication(String jwt) {
-        UserDetails userDetails = new UserPrincipal(Account.builder().username(getUsername(jwt)).build());
+        UserDetails userDetails = new UserPrincipal(Account.builder().email(getEmail(jwt)).build());
         return new UsernamePasswordAuthenticationToken(userDetails, "", getAuthorities(jwt));
     }
 
-    private String getUsername(String jwt) {
+    private String getEmail(String jwt) {
         return getClaims(jwt).getBody().getSubject();
     }
 

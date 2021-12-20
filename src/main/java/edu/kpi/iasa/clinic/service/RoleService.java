@@ -1,7 +1,7 @@
 package edu.kpi.iasa.clinic.service;
 
 import edu.kpi.iasa.clinic.exception.RoleNotFoundException;
-import edu.kpi.iasa.clinic.model.Role;
+import edu.kpi.iasa.clinic.repository.model.Role;
 import edu.kpi.iasa.clinic.repository.RoleRepository;
 import org.springframework.stereotype.Service;
 

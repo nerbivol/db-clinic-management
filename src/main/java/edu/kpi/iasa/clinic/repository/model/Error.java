@@ -1,4 +1,4 @@
-package edu.kpi.iasa.clinic.model;
+package edu.kpi.iasa.clinic.repository.model;
 
 import lombok.Builder;
 import lombok.Data;

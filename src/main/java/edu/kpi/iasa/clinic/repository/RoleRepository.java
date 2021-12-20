@@ -1,6 +1,6 @@
 package edu.kpi.iasa.clinic.repository;
 
-import edu.kpi.iasa.clinic.model.Role;
+import edu.kpi.iasa.clinic.repository.model.Role;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

@@ -1,12 +1,12 @@
-package edu.kpi.iasa.clinic.controller;
+package edu.kpi.iasa.clinic.api;
 
 
 import edu.kpi.iasa.clinic.configuration.security.jwt.JwtProcessor;
-import edu.kpi.iasa.clinic.dto.AccountDto;
-import edu.kpi.iasa.clinic.dto.JwtRequestDto;
-import edu.kpi.iasa.clinic.dto.JwtResponseDto;
-import edu.kpi.iasa.clinic.dto.RegistrationDto;
-import edu.kpi.iasa.clinic.model.Account;
+import edu.kpi.iasa.clinic.api.dto.AccountDto;
+import edu.kpi.iasa.clinic.api.dto.JwtRequestDto;
+import edu.kpi.iasa.clinic.api.dto.JwtResponseDto;
+import edu.kpi.iasa.clinic.api.dto.RegistrationDto;
+import edu.kpi.iasa.clinic.repository.model.Account;
 import edu.kpi.iasa.clinic.service.RoleService;
 import edu.kpi.iasa.clinic.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -52,13 +52,13 @@ public class AuthenticationController {
         this.roleService = roleService;
     }
 
-    @PostMapping("/signin")
-    public ResponseEntity<JwtResponseDto> signIn(@RequestBody JwtRequestDto jwtRequestDto) {
-        String username = jwtRequestDto.getLogin();
+    @PostMapping("/login")
+    public ResponseEntity<JwtResponseDto> login(@RequestBody JwtRequestDto jwtRequestDto) {
+        String email = jwtRequestDto.getEmail();
         authenticationManager.authenticate(
-                new UsernamePasswordAuthenticationToken(username, jwtRequestDto.getPassword()));
-        UserDetails userDetails = userDetailsService.loadUserByUsername(username);
-        String token = jwtProcessor.createJwt(username,
+                new UsernamePasswordAuthenticationToken(email, jwtRequestDto.getPassword()));
+        UserDetails userDetails = userDetailsService.loadUserByUsername(email);
+        String token = jwtProcessor.createJwt(email,
                 (Collection<GrantedAuthority>) userDetails.getAuthorities());
         return ResponseEntity.ok(new JwtResponseDto(token));
     }
@@ -70,18 +70,18 @@ public class AuthenticationController {
     }
 
     private AccountDto createAccountDto(Account account) {
-        return new AccountDto(account.getUsername());
+        return new AccountDto(account.getEmail());
     }
 
     private Account createAccount(RegistrationDto registrationDto) {
         Account account = Account.builder()
-                .username(registrationDto.getUsername())
+                .email(registrationDto.getEmail())
                 .password(passwordEncoder.encode(registrationDto.getPassword()))
                 .firstName(registrationDto.getFirstName())
                 .lastName(registrationDto.getLastName())
-                .email(registrationDto.getEmail())
                 .phone(registrationDto.getPhone())
                 .dateCreated(LocalDate.now())
+                .enabled(Boolean.TRUE)
                 .build();
         account.setRoles(Collections.singleton(roleService.getRoleByCode(DEFAULT_ROLE)));
         return account;

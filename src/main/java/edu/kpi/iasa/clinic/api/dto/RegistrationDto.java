@@ -1,4 +1,4 @@
-package edu.kpi.iasa.clinic.dto;
+package edu.kpi.iasa.clinic.api.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -8,12 +8,9 @@ import lombok.Data;
 @Builder
 @AllArgsConstructor
 public class RegistrationDto {
-    private String username;
+    private String email;
     private String password;
     private String firstName;
-    private String firstNameOrigin;
-    private String lastNameOrigin;
     private String lastName;
-    private String email;
     private String phone;
 }

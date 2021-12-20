@@ -1,8 +1,8 @@
-package edu.kpi.iasa.clinic.service;
+package edu.kpi.iasa.clinic.service.impl;
 
 import edu.kpi.iasa.clinic.configuration.security.UserPrincipal;
 import edu.kpi.iasa.clinic.exception.UserNotFoundException;
-import edu.kpi.iasa.clinic.model.Account;
+import edu.kpi.iasa.clinic.repository.model.Account;
 import edu.kpi.iasa.clinic.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -19,8 +19,8 @@ public class UserDetailsServiceImpl implements UserDetailsService {
     }
 
     @Override
-    public UserPrincipal loadUserByUsername(String username) throws UsernameNotFoundException {
-        Account user = userRepository.findByUsername(username).orElseThrow(UserNotFoundException::new);
+    public UserPrincipal loadUserByUsername(String email) throws UsernameNotFoundException {
+        Account user = userRepository.findByEmail(email).orElseThrow(UserNotFoundException::new);
         return new UserPrincipal(user);
     }
 }

@@ -1,6 +1,6 @@
 package edu.kpi.iasa.clinic.service;
 
-import edu.kpi.iasa.clinic.model.Account;
+import edu.kpi.iasa.clinic.repository.model.Account;
 import edu.kpi.iasa.clinic.repository.UserRepository;
 import org.springframework.stereotype.Service;
 

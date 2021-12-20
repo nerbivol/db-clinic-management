@@ -86,8 +86,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter implements Appl
                 .authenticationEntryPoint(jwtAuthenticationEntryPoint)
                 .and()
                 .authorizeRequests()
-                .antMatchers(HttpMethod.POST, "/signin").permitAll()
+                .antMatchers(HttpMethod.POST, "/login").permitAll()
                 .antMatchers(HttpMethod.POST, "/signup").permitAll()
+                .antMatchers("/admin").hasAuthority("ADMIN")
+                .antMatchers("/admin/**").hasAuthority("ADMIN")
+                .antMatchers("/user").hasAuthority("USER")
+                .antMatchers("/user/*").hasAuthority("USER")
                 .anyRequest().authenticated()
                 .and()
                 .apply(jwtConfigurer());

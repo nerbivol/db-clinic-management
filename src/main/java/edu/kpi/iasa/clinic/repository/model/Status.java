@@ -1,6 +1,5 @@
-package edu.kpi.iasa.clinic.model;
+package edu.kpi.iasa.clinic.repository.model;
 
-import lombok.Getter;
 import lombok.ToString;
 
 import javax.persistence.Column;
@@ -52,4 +51,3 @@ public class Status {
         return this.id;
     }
 }
-
