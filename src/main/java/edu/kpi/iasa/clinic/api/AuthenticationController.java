@@ -18,12 +18,14 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
 import java.time.LocalDate;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.List;
 
 @Controller
 public class AuthenticationController {
@@ -38,12 +40,9 @@ public class AuthenticationController {
     private final RoleService roleService;
 
     @Autowired
-    public AuthenticationController(AuthenticationManager authenticationManager,
-                                    JwtProcessor jwtProcessor,
-                                    UserDetailsService userDetailsService,
-                                    UserService userService,
-                                    PasswordEncoder passwordEncoder,
-                                    RoleService roleService) {
+    public AuthenticationController(AuthenticationManager authenticationManager, JwtProcessor jwtProcessor,
+                                    UserDetailsService userDetailsService, UserService userService,
+                                    PasswordEncoder passwordEncoder, RoleService roleService) {
         this.authenticationManager = authenticationManager;
         this.jwtProcessor = jwtProcessor;
         this.userDetailsService = userDetailsService;
@@ -55,11 +54,9 @@ public class AuthenticationController {
     @PostMapping("/login")
     public ResponseEntity<JwtResponseDto> login(@RequestBody JwtRequestDto jwtRequestDto) {
         String email = jwtRequestDto.getEmail();
-        authenticationManager.authenticate(
-                new UsernamePasswordAuthenticationToken(email, jwtRequestDto.getPassword()));
+        authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(email, jwtRequestDto.getPassword()));
         UserDetails userDetails = userDetailsService.loadUserByUsername(email);
-        String token = jwtProcessor.createJwt(email,
-                (Collection<GrantedAuthority>) userDetails.getAuthorities());
+        String token = jwtProcessor.createJwt(email, (Collection<GrantedAuthority>) userDetails.getAuthorities());
         return ResponseEntity.ok(new JwtResponseDto(token));
     }
 
@@ -70,7 +67,7 @@ public class AuthenticationController {
     }
 
     private AccountDto createAccountDto(Account account) {
-        return new AccountDto(account.getEmail());
+        return new AccountDto(account.getId(), account.getFirstName(), account.getLastName());
     }
 
     private Account createAccount(RegistrationDto registrationDto) {
@@ -86,4 +83,5 @@ public class AuthenticationController {
         account.setRoles(Collections.singleton(roleService.getRoleByCode(DEFAULT_ROLE)));
         return account;
     }
+
 }

@@ -1,14 +1,20 @@
 package edu.kpi.iasa.clinic.service.impl;
 
 
+import edu.kpi.iasa.clinic.exception.DeclarationNotFoundException;
+import edu.kpi.iasa.clinic.exception.UserNotFoundException;
 import edu.kpi.iasa.clinic.repository.ClinicRepository;
 
+import edu.kpi.iasa.clinic.repository.UserRepository;
+import edu.kpi.iasa.clinic.repository.model.Account;
 import edu.kpi.iasa.clinic.repository.model.Clinic;
 import edu.kpi.iasa.clinic.service.ClinicService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
+import java.util.OptionalInt;
 
 @RequiredArgsConstructor
 @Service
@@ -21,15 +27,15 @@ public class ClinicServiceImpl implements ClinicService {
         return clinicRepository.findAll();
     }
 
-//    @Override
-//    public List<Clinic> GetByDoctorId(long idDoctor) throws IllegalArgumentException{
-//        return clinicRepo.findAllByDoctor(idDoctor);
-//    }
-//
-//    @Override
-//    public Clinic GetByPatientId(long idPatient) throws IllegalArgumentException {
-//        return clinicRepo.findByPatient(idPatient);
-//    }
+    @Override
+    public List<String> GetDoctors(){
+        return clinicRepository.getAllDoctors();
+    }
+
+    @Override
+    public List<Clinic> GetByIdDoctor(long idDoctor) throws IllegalArgumentException{
+        return clinicRepository.findAllByIdDoctor(idDoctor);
+    }
 
     @Override
     public long createDeclaration(long idPatient, long idDoctor) throws IllegalArgumentException{
@@ -40,13 +46,14 @@ public class ClinicServiceImpl implements ClinicService {
     }
 
     @Override
-    public void updateDeclaration(long idPatient, long idDoctor) throws IllegalArgumentException {
-
+    public void updateDeclaration(long idPatient, long idDoctor){
+        Clinic declaration = clinicRepository.findById(idPatient).orElseThrow(DeclarationNotFoundException::new);
+        declaration.setIdDoctor(idDoctor);
+        clinicRepository.save(declaration);
     }
 
     @Override
     public void deleteDeclaration(long idPatient) {
-
+        clinicRepository.deleteById(idPatient);
     }
-
 }

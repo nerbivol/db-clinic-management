@@ -2,6 +2,7 @@ package edu.kpi.iasa.clinic.repository.model;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
+import org.hibernate.validator.constraints.UniqueElements;
 import org.springframework.security.core.GrantedAuthority;
 
 import javax.persistence.*;

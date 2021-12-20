@@ -2,7 +2,6 @@ package edu.kpi.iasa.clinic.api;
 
 import edu.kpi.iasa.clinic.api.dto.DeclarationDto;
 import edu.kpi.iasa.clinic.repository.model.Clinic;
-import edu.kpi.iasa.clinic.service.StatusService;
 import edu.kpi.iasa.clinic.service.impl.ClinicServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -22,23 +21,23 @@ public class ClinicController {
         this.clinicServiceImpl = clinicServiceImpl;
     }
 
-//    @GetMapping
-//    public ResponseEntity<List<Clinic>> index(){
-//        final List<Clinic> declarations = clinicServiceImpl.GetAllDeclarations();
-//
-//        return ResponseEntity.ok(declarations);
-//    }
-//
-//    @GetMapping("/doctor/{idDoctor}")
-//    public ResponseEntity<List<Clinic>> showByDoctorId(@PathVariable long idDoctor){
-//        List<Clinic> declarations = clinicServiceImpl.GetByDoctorId(idDoctor);
-//        return ResponseEntity.ok(declarations);
-//    }
-//
-//    @GetMapping("/user/{idPatient}")
-//    public ResponseEntity<Clinic> showByPatientId(@PathVariable long idPatient){
-//        return ResponseEntity.ok(clinicServiceImpl.GetByPatientId(idPatient));
-//    }
+    @GetMapping
+    public ResponseEntity<List<Clinic>> index(){
+        final List<Clinic> declarations = clinicServiceImpl.GetAllDeclarations();
+        return ResponseEntity.ok(declarations);
+    }
+
+    @GetMapping("/doctors")
+    public ResponseEntity<List<String>> showDoctors(){
+        List<String> doctors = clinicServiceImpl.GetDoctors();
+        return ResponseEntity.ok(doctors);
+    }
+
+    @GetMapping("/doctors/{idDoctor}")
+    public ResponseEntity<List<Clinic>> showByDoctorId(@PathVariable long idDoctor){
+        List<Clinic> declarations = clinicServiceImpl.GetByIdDoctor(idDoctor);
+        return ResponseEntity.ok(declarations);
+    }
 
     @PostMapping
     public ResponseEntity<Clinic> create(@RequestBody DeclarationDto newDeclaration){
@@ -48,6 +47,15 @@ public class ClinicController {
         final String declarationUri = String.format("/declaration/patient/%d", decl);
 
         return ResponseEntity.created(URI.create(declarationUri)).build();
+    }
+
+    @PatchMapping("/{id}")
+    public ResponseEntity<Void> change(@PathVariable long id, @RequestBody DeclarationDto declaration) {
+        final long idPatient = declaration.getIdPatient();
+        final long idDoctor = declaration.getIdDoctor();
+
+        clinicServiceImpl.updateDeclaration(idPatient, idDoctor);
+        return ResponseEntity.noContent().build();
     }
 
 }

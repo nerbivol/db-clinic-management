@@ -6,8 +6,8 @@ import java.util.List;
 
 public interface ClinicService {
     List<Clinic> GetAllDeclarations();
-//    List<Clinic> GetByDoctorId(long idDoctor) throws IllegalArgumentException;
-//    Clinic GetByPatientId(long idPatient) throws IllegalArgumentException;
+    List<String> GetDoctors();
+    List<Clinic> GetByIdDoctor(long idDoctor) throws IllegalArgumentException;
     long createDeclaration(long idPatient, long idDoctor) throws IllegalArgumentException;
     void updateDeclaration(long idPatient, long idDoctor) throws IllegalArgumentException;
     void deleteDeclaration(long idPatient);

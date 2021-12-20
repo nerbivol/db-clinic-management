@@ -1,5 +1,6 @@
 package edu.kpi.iasa.clinic.api;
 
+import edu.kpi.iasa.clinic.exception.DeclarationNotFoundException;
 import edu.kpi.iasa.clinic.exception.StatusNotFoundException;
 import edu.kpi.iasa.clinic.exception.UserNotFoundException;
 import edu.kpi.iasa.clinic.repository.model.Error;
@@ -26,7 +27,7 @@ public class HandlerController {
     }
 
     @ExceptionHandler(value
-            = { StatusNotFoundException.class })
+            = {StatusNotFoundException.class})
     protected ResponseEntity<Error> handleConflict(
             StatusNotFoundException ex, WebRequest request) {
         Error error = Error.builder().code("BAD_REQUEST").description("Status Not Found").build();
@@ -50,5 +51,11 @@ public class HandlerController {
         ).collect(Collectors.toList());
 
         return ResponseEntity.badRequest().body(errors);
+    }
+
+    @ExceptionHandler(value = {DeclarationNotFoundException.class})
+    protected ResponseEntity<Error> handleConflict(DeclarationNotFoundException ex, WebRequest request) {
+        Error error = Error.builder().code("BAD_REQUEST").description("Declaration not found").build();
+        return ResponseEntity.badRequest().body(error);
     }
 }
