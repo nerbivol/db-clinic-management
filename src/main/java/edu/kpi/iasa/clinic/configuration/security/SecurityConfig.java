@@ -88,10 +88,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter implements Appl
                 .authorizeRequests()
                 .antMatchers(HttpMethod.POST, "/login").permitAll()
                 .antMatchers(HttpMethod.POST, "/signup").permitAll()
-                .antMatchers("/admin").hasAuthority("ADMIN")
+                .antMatchers(HttpMethod.GET,"/declarations").hasAuthority("ADMIN")
+                .antMatchers("/declarations/doctors/*").hasAuthority("DOCTOR")
                 .antMatchers("/admin/**").hasAuthority("ADMIN")
                 .antMatchers("/user").hasAuthority("USER")
-                .antMatchers("/user/*").hasAuthority("USER")
+                .antMatchers("/user/*").authenticated()
                 .anyRequest().authenticated()
                 .and()
                 .apply(jwtConfigurer());

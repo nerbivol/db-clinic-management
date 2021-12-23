@@ -65,6 +65,8 @@ public class AuthenticationController {
 
     @PostMapping("/signup")
     public ResponseEntity<AccountDto> signUp(@RequestBody RegistrationDto registrationDto) {
+        userServiceImpl.checkUserRegisterByEmail(registrationDto.getEmail());
+        userServiceImpl.checkUserRegisterByPhone(registrationDto.getPhone());
         Account account = createAccount(registrationDto);
         return ResponseEntity.ok(createAccountDto(userServiceImpl.createAccount(account)));
     }

@@ -2,7 +2,6 @@ package edu.kpi.iasa.clinic.service.impl;
 
 import edu.kpi.iasa.clinic.repository.ClinicRepository;
 import edu.kpi.iasa.clinic.repository.model.Clinic;
-import edu.kpi.iasa.clinic.repository.model.Visit;
 import edu.kpi.iasa.clinic.service.ClinicService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;

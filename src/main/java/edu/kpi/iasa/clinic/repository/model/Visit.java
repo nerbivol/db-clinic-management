@@ -3,9 +3,11 @@ package edu.kpi.iasa.clinic.repository.model;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateTimeDeserializer;
+import lombok.NonNull;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.sql.Time;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -21,12 +23,15 @@ public class Visit {
     private long id;
 
     @Column(name = "id_patient")
+    @NotNull(message = "validation.text.error.required.field")
     private long idPatient;
 
     @Column(name = "date", columnDefinition = "Date")
+    @NotNull(message = "validation.text.error.required.field")
     private LocalDate dateVisit;
 
     @Column(name = "time", columnDefinition = "Time")
+    @NotNull(message = "validation.text.error.required.field")
     private LocalTime timeVisit;
 
     public Visit(){ }

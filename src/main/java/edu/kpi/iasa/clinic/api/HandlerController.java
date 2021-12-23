@@ -1,7 +1,6 @@
 package edu.kpi.iasa.clinic.api;
 
-import edu.kpi.iasa.clinic.exception.StatusNotFoundException;
-import edu.kpi.iasa.clinic.exception.UserNotFoundException;
+import edu.kpi.iasa.clinic.exception.*;
 import edu.kpi.iasa.clinic.repository.model.Error;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -29,15 +28,37 @@ public class HandlerController {
             = { StatusNotFoundException.class })
     protected ResponseEntity<Error> handleConflict(
             StatusNotFoundException ex, WebRequest request) {
-        Error error = Error.builder().code("BAD_REQUEST").description("Status Not Found").build();
+        Error error = Error.builder().code("Bad Request").description("Status Not Found").build();
         return ResponseEntity.badRequest().body(error);
     }
 
     @ExceptionHandler({UserNotFoundException.class, BadCredentialsException.class})
     public ResponseEntity<Void> handleUserNotFoundException() {
-        return ResponseEntity
-                .status(HttpStatus.NOT_FOUND)
-                .build();
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+    }
+
+    @ExceptionHandler({EmailAddressAlreadyExistsException.class})
+    public ResponseEntity<Error> handleConflict(EmailAddressAlreadyExistsException ex, WebRequest request) {
+        Error error = Error.builder().code("Bad Request").description("Email address already exists ").build();
+        return ResponseEntity.badRequest().body(error);
+    }
+
+    @ExceptionHandler({PhoneAlreadyExistsException.class})
+    public ResponseEntity<Error> handleConflict(PhoneAlreadyExistsException ex, WebRequest request) {
+        Error error = Error.builder().code("Bad Request").description("Phone already exists ").build();
+        return ResponseEntity.badRequest().body(error);
+    }
+
+    @ExceptionHandler({PatientEqualDoctorException.class})
+    public ResponseEntity<Error> handleConflict(PatientEqualDoctorException ex, WebRequest request) {
+        Error error = Error.builder().code("Bad Request").description("The doctor cannot treat himself").build();
+        return ResponseEntity.badRequest().body(error);
+    }
+
+    @ExceptionHandler({PatientNotDoctorException.class})
+    public ResponseEntity<Error> handleConflict(PatientNotDoctorException ex, WebRequest request) {
+        Error error = Error.builder().code("Bad Request").description("The declaration cannot be signed with the patient").build();
+        return ResponseEntity.badRequest().body(error);
     }
 
     @ExceptionHandler(ConstraintViolationException.class)

@@ -24,26 +24,35 @@ public class DeclarationController {
     @GetMapping
     public ResponseEntity<List<Declaration>> index(){
         final List<Declaration> declarations = declarationServiceImpl.GetAllDeclarations();
-
         return ResponseEntity.ok(declarations);
     }
 
-    @GetMapping("/doctor/{idDoctor}")
+    @GetMapping("/doctors")
+    public ResponseEntity<List<String>> showAllDoctors(){
+        return ResponseEntity.ok(declarationServiceImpl.GetAllDoctor());
+    }
+
+    @GetMapping("/doctors/{idDoctor}")
     public ResponseEntity<List<Declaration>> showByDoctorId(@PathVariable long idDoctor){
         List<Declaration> declarations = declarationServiceImpl.GetByDoctorId(idDoctor);
         return ResponseEntity.ok(declarations);
     }
 
-    @GetMapping("/user/{idPatient}")
+    @GetMapping("/doctors/my-patients")
+    public ResponseEntity<List<Declaration>> showDoctorPatient(){
+        List<Declaration> declarations = declarationServiceImpl.GetDoctorPatient();
+        return ResponseEntity.ok(declarations);
+    }
+
+    @GetMapping("/patients/{idPatient}")
     public ResponseEntity<Declaration> showByPatientId(@PathVariable long idPatient){
         return ResponseEntity.ok(declarationServiceImpl.GetByIdPatient(idPatient));
     }
 
     @PostMapping
     public ResponseEntity<Declaration> create(@RequestBody DeclarationDto newDeclaration){
-        final long patient =  newDeclaration.getIdPatient();
         final long doctor = newDeclaration.getIdDoctor();
-        final long decl = declarationServiceImpl.createDeclaration(patient, doctor);
+        final long decl = declarationServiceImpl.createDeclaration(doctor);
         final String declarationUri = String.format("/declaration/patient/%d", decl);
 
         return ResponseEntity.created(URI.create(declarationUri)).build();
