@@ -8,7 +8,7 @@ import edu.kpi.iasa.clinic.api.dto.JwtResponseDto;
 import edu.kpi.iasa.clinic.api.dto.RegistrationDto;
 import edu.kpi.iasa.clinic.repository.model.Account;
 import edu.kpi.iasa.clinic.service.RoleService;
-import edu.kpi.iasa.clinic.service.UserService;
+import edu.kpi.iasa.clinic.service.impl.UserServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -33,7 +33,7 @@ public class AuthenticationController {
     private final AuthenticationManager authenticationManager;
     private final JwtProcessor jwtProcessor;
     private final UserDetailsService userDetailsService;
-    private final UserService userService;
+    private final UserServiceImpl userServiceImpl;
     private final PasswordEncoder passwordEncoder;
     private final RoleService roleService;
 
@@ -41,13 +41,13 @@ public class AuthenticationController {
     public AuthenticationController(AuthenticationManager authenticationManager,
                                     JwtProcessor jwtProcessor,
                                     UserDetailsService userDetailsService,
-                                    UserService userService,
+                                    UserServiceImpl userServiceImpl,
                                     PasswordEncoder passwordEncoder,
                                     RoleService roleService) {
         this.authenticationManager = authenticationManager;
         this.jwtProcessor = jwtProcessor;
         this.userDetailsService = userDetailsService;
-        this.userService = userService;
+        this.userServiceImpl = userServiceImpl;
         this.passwordEncoder = passwordEncoder;
         this.roleService = roleService;
     }
@@ -66,7 +66,7 @@ public class AuthenticationController {
     @PostMapping("/signup")
     public ResponseEntity<AccountDto> signUp(@RequestBody RegistrationDto registrationDto) {
         Account account = createAccount(registrationDto);
-        return ResponseEntity.ok(createAccountDto(userService.createAccount(account)));
+        return ResponseEntity.ok(createAccountDto(userServiceImpl.createAccount(account)));
     }
 
     private AccountDto createAccountDto(Account account) {

@@ -2,10 +2,7 @@ package edu.kpi.iasa.clinic.service;
 
 import edu.kpi.iasa.clinic.repository.model.Visit;
 
-import java.sql.Time;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.sql.Date;
 import java.time.LocalTime;
 import java.util.List;
 

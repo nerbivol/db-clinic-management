@@ -1,30 +1,56 @@
 package edu.kpi.iasa.clinic.repository.model;
 
-import lombok.AllArgsConstructor;
 import lombok.Builder;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
+import java.time.LocalDate;
 
 @Entity
 @Builder
-@Table(name = "declarations")
+@Table(name = "diagnostic")
 public class Clinic {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private long id;
+
+    @Column(name="id_patient")
     private long idPatient;
-    private long idDoctor;
 
-    public Clinic(){}
+    private String complains;
+    private String conclusion;
+    private String diagnose;
+    private double price;
 
-    public Clinic(long idPatient, long idDoctor){
+    @Column(name = "additional_review")
+    private String additionalReview;
+
+    @Column(name = "date_created")
+    private LocalDate dateCreated;
+
+    @Column(name = "date_updated")
+    private LocalDate dateUpdated;
+
+    public Clinic(long id, long idPatient, String complains, String conclusion, String diagnose, double price, String additionalReview, LocalDate dateCreated, LocalDate dateUpdated) {
+        this.id = id;
         this.idPatient = idPatient;
-        this.idDoctor = idDoctor;
+        this.complains = complains;
+        this.conclusion = conclusion;
+        this.diagnose = diagnose;
+        this.price = price;
+        this.additionalReview = additionalReview;
+        this.dateCreated = dateCreated;
+        this.dateUpdated = dateUpdated;
     }
 
-    @Column(name = "id_patient")
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
+    }
+
     public long getIdPatient() {
         return idPatient;
     }
@@ -33,12 +59,59 @@ public class Clinic {
         this.idPatient = idPatient;
     }
 
-    @Column(name = "id_doctor")
-    public long getIdDoctor() {
-        return idDoctor;
+    public String getComplains() {
+        return complains;
     }
 
-    public void setIdDoctor(long idDoctor) {
-        this.idDoctor = idDoctor;
+    public void setComplains(String complains) {
+        this.complains = complains;
+    }
+
+    public String getConclusion() {
+        return conclusion;
+    }
+
+    public void setConclusion(String conclusion) {
+        this.conclusion = conclusion;
+    }
+
+    public String getDiagnose() {
+        return diagnose;
+    }
+
+    public void setDiagnose(String diagnose) {
+        this.diagnose = diagnose;
+    }
+
+    public double getPrice() {
+        return price;
+    }
+
+    public void setPrice(double price) {
+        this.price = price;
+    }
+
+    public String getAdditionalReview() {
+        return additionalReview;
+    }
+
+    public void setAdditionalReview(String additionalReview) {
+        this.additionalReview = additionalReview;
+    }
+
+    public LocalDate getDateCreated() {
+        return dateCreated;
+    }
+
+    public void setDateCreated(LocalDate dateCreated) {
+        this.dateCreated = dateCreated;
+    }
+
+    public LocalDate getDateUpdated() {
+        return dateUpdated;
+    }
+
+    public void setDateUpdated(LocalDate dateUpdated) {
+        this.dateUpdated = dateUpdated;
     }
 }
